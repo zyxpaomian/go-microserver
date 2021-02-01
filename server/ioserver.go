@@ -29,13 +29,12 @@ type IoServer struct {
 }
 
 // Server初始化
-func NewServer() *IoServer {
+func (s *IoServer) Init() {
 	log.Infoln("[IOServer] 初始化Agent 对象....")
-	svr := IoServer{
+	Ioserver = &IoServer{
 		clientsLock: &sync.RWMutex{},
 		clients:     map[string]*Client{},
 	}
-	return &svr
 }
 
 func (s *IoServer) backgroundService() {
@@ -203,4 +202,15 @@ func (s *IoServer) ListAliveAcgents() []string {
 	}
 	s.clientsLock.Unlock()
 	return agents
+}
+
+func (s *IoServer) BroadcastUpdate() {
+	log.Infoln("[IOServer] 服务端开始通知agent进行升级")
+	updateMsg := &msg.Msg{
+		Type: msg.SERVER_MSG_AGENT_UPDATE,
+		Msg: &msg.UpdateMsg{
+			Updateswitch: true,
+		},
+	}
+	s.broadcast(updateMsg)
 }

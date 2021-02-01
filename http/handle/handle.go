@@ -20,7 +20,8 @@ func initAPIMapping(r *http.WWWMux) {
 	r.RegistURLMapping("/v1/api/listagentsnum", "GET", apiGetAllAgentsNum)
 	// 获取当前agent的最新版本，用于自动更新
 	r.RegistURLMapping("/v1/api/agentlastversion", "GET", apiGetAgentLastestVersion)	
-	
+	// 发送广播报文，让Agent 开启更新自检
+	r.RegistURLMapping("/v1/api/updatebroadcast", "POST", apiBroadCastUpdate)	
 }
 
 func initPackageMapping(r *http.WWWMux) {

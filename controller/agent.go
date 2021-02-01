@@ -24,3 +24,4 @@ func (a *AgentCtrl) ListAgents() ([]*structs.Agent, error) {
 func (a *AgentCtrl) GetAgentVersion() (*structs.Version, error) {
 	return a.agentDao.GetAgentVersion()
 }
+

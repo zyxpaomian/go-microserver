@@ -6,6 +6,7 @@ import (
 	"microserver/common"
 	log "microserver/common/formatlog"
 	"microserver/controller"
+	"microserver/server"
 	"net/http"
 )
 
@@ -106,3 +107,17 @@ func apiGetAgentLastestVersion(res http.ResponseWriter, req *http.Request) {
 	common.ResMsg(res, 200, string(b))
 }
 
+// 开启全网更新
+func apiBroadCastUpdate(res http.ResponseWriter, req *http.Request) {
+	go server.Ioserver.BroadcastUpdate()
+
+	a := make(map[string]string)
+	a["startupdate"] = "yes"
+	b, err := json.Marshal(a)
+	if err != nil {
+		log.Errorf("[http] apiBroadCastUpdate JSON生成失败, %v", err.Error())
+		common.ResMsg(res, 400, err.Error())
+		return
+	}
+	common.ResMsg(res, 200, string(b))
+}

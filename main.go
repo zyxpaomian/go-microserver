@@ -28,8 +28,9 @@ func main() {
 	mysql.DB.InitConn()
 
 	// 启动IO服务
-	ioServer := server.NewServer()
-	go ioServer.Run()
+	//ioServer := server.NewServer()
+	server.Ioserver.Init()
+	go server.Ioserver.Run()
 
 	// 启动HTTP服务
 	mux := http.New()
