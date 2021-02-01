@@ -26,6 +26,9 @@ compile:
 			GOOS=$${GOOS} GOARCH=$${GOARCH} go build -v -o  bin/$(PROJECTNAME).$${GOOS}-$${GOARCH} ; \
 		done ;\
 	done
+	cp bin/microserver.windows-amd64 bin/microserver
+	-rm bin/microserver.windows-amd64
+	-rm bin/microserver.linux-amd64
 	
 run:
 	go run main.go

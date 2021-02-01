@@ -20,3 +20,7 @@ func init() {
 func (a *AgentCtrl) ListAgents() ([]*structs.Agent, error) {
 	return a.agentDao.ListAgents()
 }
+
+func (a *AgentCtrl) GetAgentVersion() (*structs.Version, error) {
+	return a.agentDao.GetAgentVersion()
+}

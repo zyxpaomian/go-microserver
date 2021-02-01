@@ -83,3 +83,26 @@ func apiGetAllAgentsNum(res http.ResponseWriter, req *http.Request) {
 	}
 	common.ResMsg(res, 200, string(b))
 }
+
+
+// 获取当前agent的最新版本
+func apiGetAgentLastestVersion(res http.ResponseWriter, req *http.Request) {
+	version, err := controller.Agentctrl.GetAgentVersion()
+	if err != nil {
+		log.Errorf("[http] apiGetAgentLastestVersion 数据处理失败, %v", err.Error())
+		common.ResMsg(res, 500, err.Error())
+		return
+	}
+
+	a := make(map[string]string)
+	a["lastestversion"] = version.AgentVersion
+
+	b, err := json.Marshal(a)
+	if err != nil {
+		log.Errorf("[http] apiGetAgentLastestVersion JSON生成失败, %v", err.Error())
+		common.ResMsg(res, 400, err.Error())
+		return
+	}
+	common.ResMsg(res, 200, string(b))
+}
+
